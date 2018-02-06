@@ -1,16 +1,22 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
 
     entry: [
         './src/index.js',
         'webpack-dev-server/client?http://0.0.0.0:4000',
-        'webpack/hot/only-dev-server'
+        'webpack/hot/only-dev-server',
+        './src/style.css'
     ],
 
     output: {
         path: '/',
         filename: 'bundle.js'
+    },
+
+    resolve: {
+        root: path.relolve('/src');
     },
 
     devServer: {
@@ -49,6 +55,10 @@ module.exports = {
                     presets: ['es2015', 'react']
                 })],
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.css$/,
+                loader: 'style!css-loader'
             }
         ]
     }
