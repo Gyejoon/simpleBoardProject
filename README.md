@@ -4,9 +4,18 @@
 
 자바스크립트 최신 트렌드에 맞춘 간단한 게시판 프로젝트 입니다.
 
-## 기본 작업 환경
+## Development Environment
 
 - BackEnd : Node.js + Express + MongoDB
-- FrontEnd : React.js + Redux
-- 테스트 툴 : Mocha, Mock
-- 기타 툴 : Webpack + babel + react-hot-loader
+- FrontEnd : React.js + Redux + BootStrap + JQuery
+- Test tool : Mocha, Mock
+- Build tool : Webpack + babel + react-hot-loader + nodemon + cross-env
+
+## Features
+
+- Account(Login & Join)
+  - local
+  - SNS(facebook, google, twitter)
+- Board CRUD
+- Search
+- Comment
