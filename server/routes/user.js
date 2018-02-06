@@ -7,13 +7,13 @@ const router = express.Router();
     회원가입 API
     @param username
     @param password
-    @return error code
+    @return code
         1: SUCCESS
         2: BAD USERNAME
         3: USERNAME EXISTS
         999: INVALID PARAM
 **/
-router.put('/signup', (req, res) => {
+router.post('/signup', (req, res) => {
 
     let username = req.body.username;
     let password = req.body.password;
@@ -45,10 +45,8 @@ router.put('/signup', (req, res) => {
 
         let user = new User({
             username: username,
-            password: password
+            password: user.generateHash(password)
         });
-
-        user.password = user.generateHash(user.password);
 
         user.save( (err) => {
             if(err) throw err;
@@ -62,7 +60,7 @@ router.put('/signup', (req, res) => {
     로그인 API
     @param username
     @param password
-    @return error code
+    @return code
         1: SUCCESS
         2: LOGIN FAILED
         999: INVALID PARAM
@@ -109,23 +107,31 @@ router.post('/signin', (req, res) => {
 
 /**
     세션확인 API
-    @return error code
+    @return code
         1: SUCCESS
         2: NOT AUTH
-        999: INVALID PARAM
 **/
 router.get('/getinfo', (req, res) => {
-    if(typeof req.session.loginInfo === "undefined") {
+
+    let loginInfo =  req.session.loginInfo;
+
+    if(typeof loginInfo === "undefined") {
         return res.status(401).json({
             code: 2,
-            entity: "인증이 필요 합니다."
+            entity: "인증정보가 없습니다."
         });
     }
 
-    res.json({ code: 1, entity: {info: req.session.loginInfo} });
+    res.json({ code: 1, entity: {info: loginInfo} });
 });
 
-router.delete('/logout', (req, res) => {
+/**
+    로그아웃 API
+    @return code
+        1: SUCCESS
+**/
+router.get('/logout', (req, res) => {
+
     req.session.destroy(err => { if(err) throw err; });
     return res.json({ code: 1, entity: "로그아웃이 완료되었습니다." });
 });
