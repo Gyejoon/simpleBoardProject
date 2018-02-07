@@ -4,6 +4,7 @@ var path = require('path');
 module.exports = {
 
     entry: [
+        'babel-polyfill',
         './src/index.js',
         'webpack-dev-server/client?http://0.0.0.0:4000',
         'webpack/hot/only-dev-server',
@@ -15,19 +16,14 @@ module.exports = {
         filename: 'bundle.js'
     },
 
-    resolve: {
-        root: path.relolve('/src');
-    },
-
     devServer: {
         hot: true,
         filename: 'bundle.js',
         publicPath: '/',
         historyApiFallback: true,
         contentBase: './public',
-
         proxy: {
-            "**": "http://localhost:3000" // express 서버주소
+            "**": "http://localhost:3000"
         },
         stats: {
           assets: false,
@@ -40,10 +36,9 @@ module.exports = {
         }
     },
 
+
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ],
 
     module: {
@@ -61,6 +56,10 @@ module.exports = {
                 loader: 'style!css-loader'
             }
         ]
+    },
+
+    resolve: {
+        root: path.resolve('./src')
     }
 
 

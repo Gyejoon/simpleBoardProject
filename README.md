@@ -7,7 +7,7 @@
 ## Development Environment
 
 - BackEnd : Node.js + Express + MongoDB
-- FrontEnd : React.js + Redux + BootStrap + JQuery
+- FrontEnd : React.js + Redux + BootStrap + Material + SemanticUI
 - Test tool : Mocha, Mock
 - Build tool : Webpack + babel + react-hot-loader + nodemon + cross-env
 

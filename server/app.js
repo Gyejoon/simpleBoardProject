@@ -17,7 +17,7 @@ app.set('port', config.port);
 app.set('devPort', config.devPort);
 app.set('dbUri', config.dbUri);
 
-app.use('/', express.static(path.join(__dirname, './../public')));
+app.use('/', express.static(path.join(__dirname, '../public')));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -31,7 +31,17 @@ app.use(session({
     }
 }));
 
+const db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', () =>{
+    console.log('Connected to mongodb server');
+});
+mongoose.connect(app.get('dbUri'));
+
 app.use('/api', api);
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../public/index.html'));
+});
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);
@@ -42,13 +52,6 @@ process.on('uncaughtException', function (err) {
 	console.error(err.stack);
 });
 
-const db = mongoose.connection;
-db.on('error', console.error);
-db.once('open', () =>{
-    console.log('Connected to mongodb server');
-});
-mongoose.connect(app.get('dbUri'));
-
 app.listen(app.get('port'), () => {
     console.log('Express is listening on port', app.get('port'));
 });
@@ -57,7 +60,7 @@ if(process.env.NODE_ENV == 'development') {
     console.log('Server is running on development mode');
     const config = require('../webpack.dev.config');
     const compiler = webpack(config);
-    const devServer = new WebpackDevServer(compiler, devServer);
+    const devServer = new WebpackDevServer(compiler, config.devServer);
     devServer.listen(
         app.get('devPort'), () => {
             console.log('webpack-dev-server is listening on port', app.get('devPort'));

@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-    
+
     entry: [
         './src/index.js',
         './src/style.css'
@@ -12,10 +12,6 @@ module.exports = {
         path: __dirname + '/public/',
         filename: 'bundle.js'
     },
-
-    resolve: {
-        root: path.relolve('/src');
-    }.
 
     module: {
         loaders: [
@@ -34,7 +30,20 @@ module.exports = {
         ]
     },
 
-    plugins: [
-        new webpack.HotModuleReplacementPlugin()
+    resolve: {
+        root: path.resolve('./src')
+    },
+
+    plugins:[
+        new webpack.DefinePlugin({
+          'process.env':{
+            'NODE_ENV': JSON.stringify('production')
+          }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+          compress:{
+            warnings: true
+          }
+        })
     ]
 };
