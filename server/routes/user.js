@@ -45,8 +45,10 @@ router.post('/signup', (req, res) => {
 
         let user = new User({
             username: username,
-            password: user.generateHash(password)
+            password: password
         });
+
+        user.password = user.generateHash(password);
 
         user.save( (err) => {
             if(err) throw err;

@@ -9,16 +9,18 @@ import reducers from 'reducers';
 import thunk from 'redux-thunk';
 
 
-//const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(reducers, applyMiddleware(thunk));
 
 const rootElement = document.getElementById('root');
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path="/" component={App}>
-            <IndexRoute component={Home}/>
-            <Route path="home" component={Home}/>
-            <Route path="login" component={Login}/>
-            <Route path="register" component={Register}/>
-        </Route>
-    </Router>, rootElement
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={App}>
+                <IndexRoute component={Home}/>
+                <Route path="home" component={Home}/>
+                <Route path="login" component={Login}/>
+                <Route path="register" component={Register}/>
+            </Route>
+        </Router>
+    </Provider>, rootElement
 );
