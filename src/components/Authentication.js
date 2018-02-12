@@ -41,6 +41,16 @@ class Authentication extends React.Component {
         let id = this.state.username;
         let pw = this.state.password;
 
+        if(id == "") {
+            Materialize.toast('username을 입력해주세요.', 2000);
+            return;
+        }
+
+        if(pw == "") {
+            Materialize.toast('password를 입력해주세요.', 2000);
+            return;
+        }
+
         this.props.onRegister(id, pw).then(
             (result) => {
                 if(!result) {
@@ -96,7 +106,7 @@ class Authentication extends React.Component {
                     <div className="row">
                         {inputBox}
                         <a className="waves-effect waves-light btn"
-                            onClick={this.handleLogin}>SUBMIT</a>
+                            onClick={this.handleLogin}>LOGIN</a>
                     </div>
                 </div>
 

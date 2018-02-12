@@ -18,7 +18,7 @@ class Login extends React.Component {
                         isLoggedIn: true,
                         username: id
                     };
-
+                    
                     document.cookie = 'key=' + btoa(JSON.stringify(loginData));
 
                     Materialize.toast('환영합니다. ' + id + '님', 2000);

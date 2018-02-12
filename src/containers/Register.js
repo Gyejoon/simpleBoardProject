@@ -14,17 +14,17 @@ class Register extends React.Component {
         return this.props.registerRequest(id, pw).then(
             () => {
                 if(this.props.status === "SUCCESS") {
-                    Materialize.toast('회원가입 성공!');
+                    Materialize.toast('회원가입 성공!', 2000);
                     browserHistory.push('/login');
                     return true;
                 } else {
+
                     let errorMessage = [
-                        'Invalid Username',
-                        'Password is too short',
-                        'Username already exists'
+                        '잘못된 닉네임 입니다.',
+                        '이미 가입된 유저가 존재합니다.'
                     ];
 
-                    let $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[this.props.errorCode - 1] + '</span>');
+                    let $toastContent = $('<span style="color: #FFB4BA">' + errorMessage[this.props.errorCode - 2] + '</span>');
                     Materialize.toast($toastContent, 2000);
                     return false;
                 }
